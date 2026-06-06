@@ -93,3 +93,42 @@ def do_resize_content(image: Image.Image, scale_rate: float) -> Image.Image:
         )
 
     return canvas
+
+def get_camera_for_index(data_index):
+    """
+    Camera viewpoints used in the dataset.
+
+    Coordinate system:
+        Elevation (ev):
+            +90° = top view
+            -90° = bottom view
+             0° = horizontal view
+
+        Azimuth (azimuth):
+              0° = front view
+            -90° = left view
+             90° = right view
+            180° = back view
+
+    Dataset mapping:
+
+        Index  View     Elevation  Azimuth
+        -----  -------  ---------  -------
+          0    Front       0°         0°
+          1    Left        0°       -90°
+          2    Bottom    -90°         0°
+          3    Back        0°       180°
+          4    Right       0°        90°
+          5    Top        90°         0°
+    """
+
+    camera_views = {
+        0: {"name": "front",  "elevation": 0,   "azimuth": 0},
+        1: {"name": "left",   "elevation": 0,   "azimuth": -90},
+        2: {"name": "bottom", "elevation": -90, "azimuth": 0},
+        3: {"name": "back",   "elevation": 0,   "azimuth": 180},
+        4: {"name": "right",  "elevation": 0,   "azimuth": 90},
+        5: {"name": "top",    "elevation": 90,  "azimuth": 0},
+    }
+
+    return camera_views[data_index]
